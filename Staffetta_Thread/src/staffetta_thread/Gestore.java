@@ -8,6 +8,10 @@ package staffetta_thread;
  *
  * @author pecorelli.davide
  */
-public class Gestore {
+public class Gestore extends Thread {
     
+    
+    public Gestore(){
+        
+    }
 }

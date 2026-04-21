@@ -8,6 +8,16 @@ package staffetta_thread;
  *
  * @author pecorelli.davide
  */
-public class Runner {
+public class Runner extends Thread {
+    
+    private int tempo;
+    private String nome;
+    
+    public Runner (int tempo,String nome){
+        
+        this.tempo=tempo;
+        this.nome=nome;
+    }
+    
     
 }
