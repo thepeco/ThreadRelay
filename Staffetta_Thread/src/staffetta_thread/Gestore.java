@@ -13,5 +13,8 @@ public class Gestore extends Thread {
     
     public Gestore(){
         
+        //Parte Runner 1metodo
+        //Passa Testimone 2metodo
+        // 3metodo
     }
 }
