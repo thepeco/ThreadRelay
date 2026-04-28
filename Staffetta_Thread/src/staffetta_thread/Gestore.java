@@ -10,11 +10,25 @@ package staffetta_thread;
  */
 public class Gestore extends Thread {
     
+    private int corridoreTestimone;
     
-    public Gestore(){
+    public Gestore(int corridoreTestimone){
         
-        //Parte Runner 1metodo
-        //Passa Testimone 2metodo
-        // 3metodo
+        this.corridoreTestimone = corridoreTestimone;
     }
+    
+    public synchronized void cambiaRunner(int IdCorridore) throws InterruptedException{
+        
+       while(corridoreTestimone != IdCorridore){
+           
+           wait();
+       } 
+   }
+    
+    public synchronized void attendiTurno(int prossimoRunner){
+        
+        this.corridoreTestimone = prossimoRunner;
+        notifyAll();
+    }
+    
 }
