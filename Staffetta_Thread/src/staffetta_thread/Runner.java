@@ -4,50 +4,42 @@
  */
 package staffetta_thread;
 
-import java.io.IOException;
 import java.util.Random;
 
-/**
- *
- * @author pecorelli.davide
- */
 public class Runner extends Thread {
 
     private int idCorridore;
     private Gestore GestoreBox;
     private Random rnd = new Random();
+    private int prossimo;
 
     public Runner(int idCorridore, Gestore GestoreBox) {
-
         this.idCorridore = idCorridore;
         this.GestoreBox = GestoreBox;
     }
 
     @Override
     public void run() {
-
         try {
             while (true) {
                 GestoreBox.attendiTurno(idCorridore);
+
+                int tempoCorsa = 5000;
+                Thread.sleep(tempoCorsa);
+
+                System.out.println("Corridore " + idCorridore + " ha terminato la sua frazione.");
+
+                if (idCorridore == 1) {
+                    prossimo = 2;
+                } else {
+                    prossimo = 1;
+                }
+
+                GestoreBox.cambiaRunner(prossimo);
             }
-
-            //int tempoCorsa = rnd.nextInt(2000, 3000);
-            //Thread.sleep(tempoCorsa);
-
-            int prossimo;
-
-            if (idCorridore == 1) {
-
-                prossimo = 2;
-            } else {
-                prossimo = 1;
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (InterruptedException e) {
+            System.out.println("Il corridore " + idCorridore + " è stato interrotto!");
+            
         }
-
     }
 }
-
-
