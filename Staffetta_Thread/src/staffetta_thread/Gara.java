@@ -4,6 +4,9 @@
  */
 package staffetta_thread;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author Davide
@@ -12,6 +15,7 @@ public class Gara extends javax.swing.JFrame {
 
     Gestore gestore = new Gestore(0);
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Gara.class.getName());
+    private Runner r1, r2, r3;
 
     /**
      * Creates new form Gara
@@ -19,15 +23,20 @@ public class Gara extends javax.swing.JFrame {
     public Gara() {
         initComponents();
 
-        btn_avvia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
+        gestore = new Gestore(0);
 
-                    farPartireGara();
+        btn_avvia.addActionListener(new ActionListener() {
 
-                } catch (InterruptedException ex) {
-                    System.getLogger(Gara.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-                }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btn_avvia.setEnabled(false);
+                r1 = new Runner(1, gestore, prg_runner1, lbl_tempo1);
+                r2 = new Runner(2, gestore, prg_runner2, lbl_tempo2);
+                r3 = new Runner(3, gestore, prg_runner3, lbl_tempo3);
+                r1.start();
+                r2.start();
+                r3.start();
+                gestore.cambiaRunner(1);
             }
         });
     }
@@ -36,7 +45,6 @@ public class Gara extends javax.swing.JFrame {
 
         btn_avvia.setEnabled(false);
 
-        
         Runner r1 = new Runner(1, gestore, prg_runner1, lbl_tempo1);
         Runner r2 = new Runner(2, gestore, prg_runner2, lbl_tempo2);
         Runner r3 = new Runner(3, gestore, prg_runner3, lbl_tempo3);
@@ -45,7 +53,6 @@ public class Gara extends javax.swing.JFrame {
         r2.start();
         r3.start();
 
-        
         gestore.cambiaRunner(1);
     }
 
@@ -68,6 +75,11 @@ public class Gara extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         btn_avvia = new javax.swing.JButton();
+        btn_sospendi = new javax.swing.JButton();
+        btn_riprende = new javax.swing.JButton();
+        btn_slow = new javax.swing.JButton();
+        btn_ferma = new javax.swing.JButton();
+        btn_normal = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -106,8 +118,94 @@ public class Gara extends javax.swing.JFrame {
         getContentPane().add(btn_avvia);
         btn_avvia.setBounds(50, 250, 75, 23);
 
+        btn_sospendi.setText("Sospendi");
+        btn_sospendi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_sospendiActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_sospendi);
+        btn_sospendi.setBounds(160, 250, 90, 23);
+
+        btn_riprende.setText("Riprendi");
+        btn_riprende.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_riprendeActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_riprende);
+        btn_riprende.setBounds(280, 250, 74, 23);
+
+        btn_slow.setText("Slow");
+        btn_slow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_slowActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_slow);
+        btn_slow.setBounds(390, 250, 72, 23);
+
+        btn_ferma.setText("Stop");
+        btn_ferma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_fermaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_ferma);
+        btn_ferma.setBounds(490, 250, 72, 23);
+
+        btn_normal.setText("Normal");
+        btn_normal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_normalActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_normal);
+        btn_normal.setBounds(390, 290, 72, 23);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_sospendiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sospendiActionPerformed
+        if (r1 != null) {
+            r1.setPausa(true);
+            r2.setPausa(true);
+            r3.setPausa(true);
+        }
+    }//GEN-LAST:event_btn_sospendiActionPerformed
+
+    private void btn_riprendeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_riprendeActionPerformed
+        if (r1 != null) {
+            r1.setPausa(false);
+            r2.setPausa(false);
+            r3.setPausa(false);
+        }
+    }//GEN-LAST:event_btn_riprendeActionPerformed
+
+    private void btn_slowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_slowActionPerformed
+        if (r1 != null) {
+            r1.setVelocita(150);
+            r2.setVelocita(150);
+            r3.setVelocita(150);
+        }
+    }//GEN-LAST:event_btn_slowActionPerformed
+
+    private void btn_fermaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fermaActionPerformed
+        if (r1 != null) {
+            r1.fermaGara();
+            r2.fermaGara();
+            r3.fermaGara();
+        }
+        btn_avvia.setEnabled(true);
+    }//GEN-LAST:event_btn_fermaActionPerformed
+
+    private void btn_normalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_normalActionPerformed
+        if (r1 != null) {
+            r1.setVelocita(50);
+            r2.setVelocita(50);
+            r3.setVelocita(50);
+        }
+    }//GEN-LAST:event_btn_normalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -136,6 +234,11 @@ public class Gara extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_avvia;
+    private javax.swing.JButton btn_ferma;
+    private javax.swing.JButton btn_normal;
+    private javax.swing.JButton btn_riprende;
+    private javax.swing.JButton btn_slow;
+    private javax.swing.JButton btn_sospendi;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

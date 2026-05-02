@@ -6,7 +6,6 @@ package staffetta_thread;
 
 import javax.swing.JProgressBar;
 import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
 
 public class Runner extends Thread {
 
@@ -15,6 +14,10 @@ public class Runner extends Thread {
     private JProgressBar progressBar;
     private JLabel labelTempo;
 
+    private volatile boolean running = true;
+    private volatile boolean inPausa = false;
+    private int velocita = 50;
+
     public Runner(int idCorridore, Gestore gestoreBox, JProgressBar progressBar, JLabel labelTempo) {
         this.idCorridore = idCorridore;
         this.gestoreBox = gestoreBox;
@@ -22,31 +25,50 @@ public class Runner extends Thread {
         this.labelTempo = labelTempo;
     }
 
+    public void fermaGara() {
+        running = false;
+    }
+
+    public void setPausa(boolean pausa) {
+        inPausa = pausa;
+    }
+
+    public void setVelocita(int v) {
+        velocita = v;
+    }
+
     @Override
     public void run() {
         try {
+            while (running) {
+                gestoreBox.attendiTurno(idCorridore);
+                boolean testimonePassato = false;
 
-            gestoreBox.attendiTurno(idCorridore);
+                for (int i = 0; i <= 100 && running; i++) {
+                    while (inPausa) {
+                        Thread.sleep(100);
+                    }
 
-            boolean testimonePassato = false;
+                    progressBar.setValue(i);
+                    labelTempo.setText(i + "%");
 
-            for (int i = 0; i <= 100; i++) {
-                int progresso = i;
+                    if (i == 90 && !testimonePassato) {
+                        int prossimo = (idCorridore % 3) + 1;
+                        gestoreBox.cambiaRunner(prossimo);
+                        testimonePassato = true;
+                    }
 
-                progressBar.setValue(progresso);
-                labelTempo.setText(progresso + "%");
-
-                if (progresso == 90 && !testimonePassato) {
-                    int prossimo = (idCorridore % 3) + 1;
-                    gestoreBox.cambiaRunner(prossimo);
-                    testimonePassato = true;
+                    Thread.sleep(velocita);
                 }
 
-                Thread.sleep(50);
+                if (running) {
+                    labelTempo.setText("Fine");
+                } else {
+                    labelTempo.setText("Stop");
+                }
+
+                break;
             }
-
-            labelTempo.setText("Fine");
-
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
