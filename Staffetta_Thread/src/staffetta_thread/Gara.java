@@ -6,6 +6,8 @@ package staffetta_thread;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import java.awt.Image;
 
 /**
  *
@@ -22,7 +24,12 @@ public class Gara extends javax.swing.JFrame {
      */
     public Gara() {
         initComponents();
+        ImageIcon iconaOriginale = new ImageIcon("squad.png");
+        Image img = iconaOriginale.getImage();
+        Image imgScalata = img.getScaledInstance(lbl_immagine.getWidth(), lbl_immagine.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon iconaFinale = new ImageIcon(imgScalata);
 
+        lbl_immagine.setIcon(iconaFinale);
         gestore = new Gestore(0);
 
         btn_avvia.addActionListener(new ActionListener() {
@@ -80,44 +87,59 @@ public class Gara extends javax.swing.JFrame {
         btn_slow = new javax.swing.JButton();
         btn_ferma = new javax.swing.JButton();
         btn_normal = new javax.swing.JButton();
+        lbl_immagine = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
+
+        prg_runner2.setForeground(new java.awt.Color(255, 255, 0));
         getContentPane().add(prg_runner2);
         prg_runner2.setBounds(40, 110, 490, 20);
+
+        prg_runner1.setForeground(new java.awt.Color(204, 0, 0));
         getContentPane().add(prg_runner1);
         prg_runner1.setBounds(40, 50, 490, 20);
+
+        prg_runner3.setForeground(new java.awt.Color(204, 0, 0));
         getContentPane().add(prg_runner3);
         prg_runner3.setBounds(40, 170, 490, 20);
 
+        lbl_tempo1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_tempo1.setText("0");
         getContentPane().add(lbl_tempo1);
         lbl_tempo1.setBounds(630, 50, 60, 16);
 
+        lbl_tempo2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_tempo2.setText("0");
         getContentPane().add(lbl_tempo2);
         lbl_tempo2.setBounds(630, 110, 60, 16);
 
+        lbl_tempo3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_tempo3.setText("0");
         getContentPane().add(lbl_tempo3);
         lbl_tempo3.setBounds(630, 170, 60, 16);
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel4.setText("Runner 1");
         getContentPane().add(jLabel4);
         jLabel4.setBounds(50, 30, 60, 16);
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel5.setText("Runner 2");
         getContentPane().add(jLabel5);
         jLabel5.setBounds(50, 90, 50, 16);
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel6.setText("Runner 3");
         getContentPane().add(jLabel6);
         jLabel6.setBounds(50, 150, 50, 16);
 
+        btn_avvia.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
         btn_avvia.setText("Avvia");
         getContentPane().add(btn_avvia);
-        btn_avvia.setBounds(50, 250, 75, 23);
+        btn_avvia.setBounds(40, 250, 70, 23);
 
+        btn_sospendi.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
         btn_sospendi.setText("Sospendi");
         btn_sospendi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,8 +147,9 @@ public class Gara extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_sospendi);
-        btn_sospendi.setBounds(160, 250, 90, 23);
+        btn_sospendi.setBounds(150, 250, 90, 23);
 
+        btn_riprende.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
         btn_riprende.setText("Riprendi");
         btn_riprende.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,8 +157,9 @@ public class Gara extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_riprende);
-        btn_riprende.setBounds(280, 250, 74, 23);
+        btn_riprende.setBounds(150, 280, 90, 23);
 
+        btn_slow.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
         btn_slow.setText("Slow");
         btn_slow.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,8 +167,9 @@ public class Gara extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_slow);
-        btn_slow.setBounds(390, 250, 72, 23);
+        btn_slow.setBounds(290, 250, 80, 23);
 
+        btn_ferma.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
         btn_ferma.setText("Stop");
         btn_ferma.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,8 +177,9 @@ public class Gara extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_ferma);
-        btn_ferma.setBounds(490, 250, 72, 23);
+        btn_ferma.setBounds(410, 250, 72, 23);
 
+        btn_normal.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
         btn_normal.setText("Normal");
         btn_normal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,7 +187,11 @@ public class Gara extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_normal);
-        btn_normal.setBounds(390, 290, 72, 23);
+        btn_normal.setBounds(290, 280, 80, 23);
+
+        lbl_immagine.setText("jLabel1");
+        getContentPane().add(lbl_immagine);
+        lbl_immagine.setBounds(30, 330, 750, 470);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -242,6 +272,7 @@ public class Gara extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel lbl_immagine;
     private javax.swing.JLabel lbl_tempo1;
     private javax.swing.JLabel lbl_tempo2;
     private javax.swing.JLabel lbl_tempo3;

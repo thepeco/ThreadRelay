@@ -14,8 +14,8 @@ public class Runner extends Thread {
     private JProgressBar progressBar;
     private JLabel labelTempo;
 
-    private volatile boolean running = true;
-    private volatile boolean inPausa = false;
+    private boolean running = true;
+    private boolean inPausa = false;
     private int velocita = 50;
 
     public Runner(int idCorridore, Gestore gestoreBox, JProgressBar progressBar, JLabel labelTempo) {
