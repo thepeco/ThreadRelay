@@ -25,40 +25,30 @@ public class Runner extends Thread {
     @Override
     public void run() {
         try {
-            while (true) {
-                
-                gestoreBox.attendiTurno(idCorridore);
 
-                
-                for (int i = 0; i <= 100; i++) {
-                    int progresso = i;
+            gestoreBox.attendiTurno(idCorridore);
 
-                    
-                    progressBar.setValue(progresso);
-                    labelTempo.setText(progresso + "%");
+            boolean testimonePassato = false;
 
-                    
-                    if (progresso == 90) {
-                        int prossimo;
-                        if (idCorridore == 1) {
-                            prossimo = 2;
-                        } else if (idCorridore == 2) {
-                            prossimo = 3;
-                        } else {
-                            prossimo = 1;
-                        }
+            for (int i = 0; i <= 100; i++) {
+                int progresso = i;
 
-                        gestoreBox.cambiaRunner(prossimo);
-                    }
+                progressBar.setValue(progresso);
+                labelTempo.setText(progresso + "%");
 
-                    
-                    Thread.sleep(50);
+                if (progresso == 90 && !testimonePassato) {
+                    int prossimo = (idCorridore % 3) + 1;
+                    gestoreBox.cambiaRunner(prossimo);
+                    testimonePassato = true;
                 }
 
-                labelTempo.setText("Fine");
+                Thread.sleep(50);
             }
+
+            labelTempo.setText("Fine");
+
         } catch (InterruptedException e) {
-            System.out.println("Thread interrotto");
+            Thread.currentThread().interrupt();
         }
     }
 }

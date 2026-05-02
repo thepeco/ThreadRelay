@@ -9,26 +9,21 @@ package staffetta_thread;
  * @author pecorelli.davide
  */
 public class Gestore extends Thread {
-    
+
     private int corridoreTestimone;
-    
-    public Gestore(int corridoreTestimone){
-        
-        this.corridoreTestimone = corridoreTestimone;
+
+    public Gestore(int partenza) {
+        this.corridoreTestimone = partenza;
     }
-    
-    public synchronized void cambiaRunner(int IdCorridore) throws InterruptedException{
-        
-       while(corridoreTestimone != IdCorridore){
-           
-           wait();
-       } 
-   }
-    
-    public synchronized void attendiTurno(int prossimoRunner){
-        
-        this.corridoreTestimone = prossimoRunner;
+
+    public synchronized void attendiTurno(int id) throws InterruptedException {
+        while (corridoreTestimone != id) {
+            wait();
+        }
+    }
+
+    public synchronized void cambiaRunner(int prossimoID) {
+        this.corridoreTestimone = prossimoID;
         notifyAll();
     }
-    
 }

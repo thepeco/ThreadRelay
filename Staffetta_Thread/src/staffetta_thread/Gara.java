@@ -9,6 +9,7 @@ package staffetta_thread;
  * @author Davide
  */
 public class Gara extends javax.swing.JFrame {
+
     Gestore gestore = new Gestore(0);
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Gara.class.getName());
 
@@ -17,23 +18,22 @@ public class Gara extends javax.swing.JFrame {
      */
     public Gara() {
         initComponents();
-        
 
         btn_avvia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    
+
                     farPartireGara();
-                    
+
                 } catch (InterruptedException ex) {
                     System.getLogger(Gara.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                 }
             }
         });
     }
-    
+
     private void farPartireGara() throws InterruptedException {
-        
+
         btn_avvia.setEnabled(false);
 
         
@@ -41,7 +41,6 @@ public class Gara extends javax.swing.JFrame {
         Runner r2 = new Runner(2, gestore, prg_runner2, lbl_tempo2);
         Runner r3 = new Runner(3, gestore, prg_runner3, lbl_tempo3);
 
-        
         r1.start();
         r2.start();
         r3.start();
