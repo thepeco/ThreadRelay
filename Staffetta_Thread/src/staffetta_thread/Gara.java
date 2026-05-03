@@ -13,7 +13,7 @@ import java.awt.Image;
  *
  * @author Davide
  */
-public class Gara extends javax.swing.JFrame {
+public class Gara extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
 
     Gestore gestore = new Gestore(0);
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Gara.class.getName());
@@ -31,12 +31,13 @@ public class Gara extends javax.swing.JFrame {
 
         lbl_immagine.setIcon(iconaFinale);
         gestore = new Gestore(0);
+        gestore.addPropertyChangeListener(this);
 
         btn_avvia.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 btn_avvia.setEnabled(false);
+
                 r1 = new Runner(1, gestore, prg_runner1, lbl_tempo1);
                 r2 = new Runner(2, gestore, prg_runner2, lbl_tempo2);
                 r3 = new Runner(3, gestore, prg_runner3, lbl_tempo3);
@@ -46,21 +47,6 @@ public class Gara extends javax.swing.JFrame {
                 gestore.cambiaRunner(1);
             }
         });
-    }
-
-    private void farPartireGara() throws InterruptedException {
-
-        btn_avvia.setEnabled(false);
-
-        Runner r1 = new Runner(1, gestore, prg_runner1, lbl_tempo1);
-        Runner r2 = new Runner(2, gestore, prg_runner2, lbl_tempo2);
-        Runner r3 = new Runner(3, gestore, prg_runner3, lbl_tempo3);
-
-        r1.start();
-        r2.start();
-        r3.start();
-
-        gestore.cambiaRunner(1);
     }
 
     /**
@@ -236,6 +222,16 @@ public class Gara extends javax.swing.JFrame {
             r3.setVelocita(50);
         }
     }//GEN-LAST:event_btn_normalActionPerformed
+
+    @Override
+    public void propertyChange(java.beans.PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("progresso")) {
+            int[] dati = (int[]) evt.getNewValue();
+            int id = dati[0];
+            int valore = dati[1];
+
+        }
+    }
 
     /**
      * @param args the command line arguments

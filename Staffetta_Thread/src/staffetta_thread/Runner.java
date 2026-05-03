@@ -48,6 +48,7 @@ public class Runner extends Thread {
                     while (inPausa) {
                         Thread.sleep(100);
                     }
+                    gestoreBox.notificaProgresso(idCorridore, i);
 
                     progressBar.setValue(i);
                     labelTempo.setText(i + "%");
