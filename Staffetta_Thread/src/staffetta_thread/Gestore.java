@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package staffetta_thread;
-
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 /**
  *
  * @author pecorelli.davide
@@ -11,6 +12,7 @@ package staffetta_thread;
 public class Gestore extends Thread {
 
     private int corridoreTestimone;
+    private PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public Gestore(int partenza) {
         this.corridoreTestimone = partenza;
